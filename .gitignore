@@ -1,0 +1,28 @@
+# Android
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+.DS_Store
+app/build/
+app/release/
+google-services.json
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Python / Bridge Server
+bridge-server/__pycache__/
+bridge-server/.venv/
+bridge-server/*.json
+bridge-server/*.txt
+!bridge-server/requirements.txt
+!bridge-server/README.md
+
+# OS
+Thumbs.db
+
+# Kotlin/JVM
+.kotlin/
