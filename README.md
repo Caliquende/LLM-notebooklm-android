@@ -67,6 +67,29 @@ pip install -r requirements.txt
 python server.py
 ```
 
+## CI
+
+GitHub Actions runs on pushes and pull requests targeting `master`.
+
+The CI layer validates:
+- Android unit tests: `./gradlew testDebugUnitTest`
+- Android lint: `./gradlew lintDebug`
+- Debug APK assembly: `./gradlew assembleDebug`
+- Bridge server syntax: `python -m py_compile bridge-server/server.py`
+
+Run the same Android checks locally before pushing:
+
+```powershell
+.\gradlew.bat testDebugUnitTest lintDebug assembleDebug
+```
+
+Run the bridge server check locally:
+
+```powershell
+python -m pip install -r bridge-server/requirements.txt
+python -m py_compile bridge-server/server.py
+```
+
 ## License
 
 This project is for educational and personal research purposes.
