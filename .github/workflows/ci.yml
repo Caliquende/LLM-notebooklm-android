@@ -65,3 +65,43 @@ jobs:
 
       - name: Compile Python sources
         run: python -m py_compile bridge-server/server.py
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install and scan bridge-server dependencies
+        run: |
+          python -m pip install -r bridge-server/requirements.txt
+          pip install bandit[toml] pip-audit
+
+      - name: Run Bandit on bridge-server
+        run: |
+          bandit -r bridge-server/ -f screen --severity-level medium --confidence-level medium || true
+
+      - name: Run pip-audit
+        run: |
+          pip-audit || true
+
+      - name: Check for hardcoded secrets
+        run: |
+          FOUND=0
+          for pattern in "sk-" "api_key" "apiKey" "secret_key" "password" "BEGIN RSA PRIVATE KEY"; do
+            if grep -rlI "$pattern" --include="*.kt" --include="*.java" --include="*.py" --include="*.xml" . 2>/dev/null | grep -v ".git/" | grep -v "SECURITY.md"; then
+              echo "Warning: Potential secret pattern found: $pattern"
+              FOUND=1
+            fi
+          done
+          if [ "$FOUND" -eq 0 ]; then
+            echo "No hardcoded secrets detected."
+          fi
+
