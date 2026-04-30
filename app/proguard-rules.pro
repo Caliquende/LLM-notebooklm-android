@@ -15,3 +15,8 @@
 # Kotlin serialization
 -keepattributes *Annotation*, InnerClasses
 -dontnote kotlinx.serialization.AnnotationsKt
+
+# Google Error Prone / Tink (fixes R8 missing class errors)
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn javax.annotation.**
+
