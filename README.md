@@ -90,6 +90,16 @@ python -m pip install -r bridge-server/requirements.txt
 python -m py_compile bridge-server/server.py
 ```
 
+## Security
+
+This project follows robust security protocols:
+- **Dependabot:** Automated updates for Gradle (Android), pip (bridge-server), and GitHub Actions.
+- **CodeQL:** Static Application Security Testing (SAST) for Java/Kotlin and Python.
+- **Security Policy:** Detailed in [SECURITY.md](./SECURITY.md).
+- **Proactive Scanning:** CI includes Bandit for Python and hardcoded secret detection.
+- **Android Security:** Uses `EncryptedSharedPreferences` for keys and enforces HTTPS in release builds.
+
 ## License
+
 
 This project is for educational and personal research purposes.
